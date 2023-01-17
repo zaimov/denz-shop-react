@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import FormInput from '../form-input/form-input.component';
 import Button, {BUTTON_TYPE_CLASSES} from '../button/button.component';
 import './sign-in-form.styles';
@@ -24,7 +24,7 @@ const SignInForm = () => {
     dispatch(googleSignInStart());
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -32,15 +32,11 @@ const SignInForm = () => {
 
       resetFormFields();
     } catch (error) {
-      if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
-        alert('Wrong username or password');
-      } else {
-        console.error(error);
-      }
+      console.error(error);
     }
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
 
     setFormFields({...formFields, [name]: value})
